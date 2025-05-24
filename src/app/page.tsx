@@ -27,54 +27,48 @@ export default function Home() {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <div className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block">Master Trading with</span>
-                  <span className="block text-blue-600">Professional Guidance</span>
-                </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Join our comprehensive trading courses and learn from experienced traders. Get access to real-time market analysis, trading strategies, and a supportive community.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <Link href="/courses" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
-                      Get Started
-                    </Link>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <Link href="/about" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10">
-                      Learn More
-                    </Link>
-                  </div>
-                </div>
+      <section className="relative bg-gradient-to-r from-white to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative pt-16 pb-20 lg:pt-24 lg:pb-28">
+            <div className="text-center lg:text-left">
+              <h1 className="heading-1">
+                <span className="block">Master Trading with</span>
+                <span className="block text-blue-600">Professional Guidance</span>
+              </h1>
+              <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0">
+                Join our comprehensive trading courses and learn from experienced traders. Get access to real-time market analysis, trading strategies, and a supportive community.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="/courses" className="btn-primary">
+                  Get Started
+                </Link>
+                <Link href="/about" className="btn-secondary">
+                  Learn More
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Featured Courses Section */}
-      <div className="bg-gray-50 py-12">
+      <section className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h2 className="heading-2">
               Featured Courses
             </h2>
-            <p className="mt-4 text-lg text-gray-500">
+            <p className="mt-4 text-lg text-gray-600">
               Choose from our selection of professional trading courses
             </p>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-12">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {featuredCourses.map((course) => (
-                <div key={course.id} className="bg-white overflow-hidden shadow-lg rounded-lg">
+                <div key={course.id} className="card">
                   <div className="relative h-48">
                     <Image
                       src={course.image}
@@ -83,13 +77,16 @@ export default function Home() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="px-6 py-4">
+                  <div className="p-6">
                     <h3 className="text-xl font-semibold text-gray-900">{course.title}</h3>
-                    <p className="mt-2 text-gray-500">{course.description}</p>
-                    <div className="mt-4 flex justify-between items-center">
-                      <span className="text-blue-600 font-bold">{course.price}</span>
-                      <Link href={`/courses/${course.id}`} className="text-blue-600 hover:text-blue-800 font-medium">
-                        Learn More →
+                    <p className="mt-3 text-gray-600">{course.description}</p>
+                    <div className="mt-6 flex justify-between items-center">
+                      <span className="text-2xl font-bold text-blue-600">{course.price}</span>
+                      <Link href={`/courses/${course.id}`} className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                        Learn More
+                        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                       </Link>
                     </div>
                   </div>
@@ -98,7 +95,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
