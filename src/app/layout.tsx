@@ -1,6 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,13 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body className={`${inter.className} flex flex-col min-h-screen bg-background text-foreground`}>
         <nav className="bg-white shadow-sm sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
                 <Link href="/" className="flex items-center">
-                  <span className="text-xl font-bold text-blue-600">Akademi Trading</span>
+                  <span className="text-xl font-bold text-primary">Akademi Trading</span>
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center space-x-8">
