@@ -1,97 +1,120 @@
-import Image from "next/image";
-import Link from 'next/link';
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
-  const featuredCourses = [
-    {
-      id: 1,
-      title: 'Forex Trading Fundamentals',
-      description: 'Learn the basics of forex trading and start your journey in the financial markets.',
-      image: '/images/forex-trading.jpg',
-      price: '$199',
-    },
-    {
-      id: 2,
-      title: 'Advanced Stock Trading',
-      description: 'Master advanced stock trading strategies and technical analysis.',
-      image: '/images/stock-trading.jpg',
-      price: '$299',
-    },
-    {
-      id: 3,
-      title: 'Cryptocurrency Trading',
-      description: 'Understand cryptocurrency markets and trading strategies.',
-      image: '/images/crypto-trading.jpg',
-      price: '$249',
-    },
-  ];
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-white to-blue-50 py-20 lg:py-32">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative">
-            <div className="text-center lg:text-left max-w-3xl mx-auto lg:mx-0">
-              <h1 className="heading-1 mb-8">
-                <span className="block mb-2">Master Trading with</span>
-                <span className="block text-blue-600">Professional Guidance</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                Mulai Perjalanan Trading Anda Bersama Kami
               </h1>
-              <p className="text-lg md:text-xl text-gray-600 mb-10">
-                Join our comprehensive trading courses and learn from experienced traders. Get access to real-time market analysis, trading strategies, and a supportive community.
+              <p className="text-lg mb-8">
+                Pelajari trading dari para ahli dan mulai perjalanan Anda menuju kebebasan finansial.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/courses" className="btn-primary text-center">
-                  Get Started
-                </Link>
-                <Link href="/about" className="btn-secondary text-center">
-                  Learn More
-                </Link>
+              <Link href="/courses" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                Mulai Belajar
+              </Link>
+            </div>
+            <div className="hidden md:block relative h-[400px]">
+              <Image
+                src="https://placehold.co/1200x800/0284c7/FFFFFF/png?text=Trading+Hero"
+                alt="Trading Academy"
+                fill
+                className="rounded-lg shadow-xl object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Mengapa Memilih Kami?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="relative h-48 mb-6">
+                <Image
+                  src="https://placehold.co/800x600/0284c7/FFFFFF/png?text=Professional+Mentors"
+                  alt="Mentor Berpengalaman"
+                  fill
+                  className="rounded-lg object-cover"
+                />
               </div>
+              <h3 className="text-xl font-semibold mb-2">Mentor Berpengalaman</h3>
+              <p className="text-gray-600">Belajar dari trader profesional dengan pengalaman bertahun-tahun di pasar.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="relative h-48 mb-6">
+                <Image
+                  src="https://placehold.co/800x600/0284c7/FFFFFF/png?text=Structured+Curriculum"
+                  alt="Materi Terstruktur"
+                  fill
+                  className="rounded-lg object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Materi Terstruktur</h3>
+              <p className="text-gray-600">Kurikulum yang dirancang sistematis dari dasar hingga mahir.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="relative h-48 mb-6">
+                <Image
+                  src="https://placehold.co/800x600/0284c7/FFFFFF/png?text=Flexible+Learning"
+                  alt="Belajar Fleksibel"
+                  fill
+                  className="rounded-lg object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Belajar Fleksibel</h3>
+              <p className="text-gray-600">Akses materi kapan saja dan di mana saja sesuai kebutuhan Anda.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Courses Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="heading-2 mb-4">
-              Featured Courses
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Choose from our selection of professional trading courses
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredCourses.map((course) => (
-              <div key={course.id} className="card group">
+          <h2 className="text-3xl font-bold text-center mb-12">Kursus Unggulan</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Dasar Trading untuk Pemula',
+                description: 'Pelajari konsep dasar dan fundamental trading.',
+                image: 'https://placehold.co/800x400/0284c7/FFFFFF/png?text=Basic+Trading'
+              },
+              {
+                title: 'Analisis Teknikal',
+                description: 'Kuasai teknik analisis grafik dan indikator.',
+                image: 'https://placehold.co/800x400/0284c7/FFFFFF/png?text=Technical+Analysis'
+              },
+              {
+                title: 'Trading Psychology',
+                description: 'Pahami dan kuasai psikologi trading.',
+                image: 'https://placehold.co/800x400/0284c7/FFFFFF/png?text=Trading+Psychology'
+              }
+            ].map((course, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="relative h-48">
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
                   <Image
                     src={course.image}
                     alt={course.title}
                     fill
-                    className="object-cover group-hover:opacity-90 transition-opacity"
+                    className="object-cover"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{course.title}</h3>
-                  <p className="text-gray-600 mb-6">{course.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-blue-600">{course.price}</span>
-                    <Link 
-                      href={`/courses/${course.id}`} 
-                      className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
-                    >
-                      Learn More
-                      <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+                  <p className="text-gray-600 mb-4">{course.description}</p>
+                  <Link href={`/courses/${index + 1}`} className="text-blue-600 font-semibold hover:text-blue-800">
+                    Pelajari Lebih Lanjut →
+                  </Link>
                 </div>
               </div>
             ))}
@@ -99,5 +122,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  );
-}
+  )
+} 

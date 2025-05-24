@@ -1,135 +1,88 @@
-'use client';
-
-import Image from 'next/image';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
+import Image from 'next/image'
+import Link from 'next/link'
 
 const courses = [
   {
     id: 1,
-    title: 'Forex Trading Fundamentals',
-    description: 'Learn the basics of forex trading and start your journey in the financial markets.',
-    image: '/images/forex-trading.jpg',
-    price: '$199',
-    duration: '8 weeks',
-    level: 'Beginner',
+    title: 'Dasar Trading untuk Pemula',
+    description: 'Pelajari konsep dasar trading, analisis teknikal, dan manajemen risiko.',
+    level: 'Pemula',
+    duration: '8 minggu',
+    price: 'Rp 2.499.000',
+    image: '/images/course-1.jpg',
   },
   {
     id: 2,
-    title: 'Advanced Stock Trading',
-    description: 'Master advanced stock trading strategies and technical analysis.',
-    image: '/images/stock-trading.jpg',
-    price: '$299',
-    duration: '12 weeks',
-    level: 'Advanced',
+    title: 'Analisis Teknikal Lanjutan',
+    description: 'Pelajari strategi trading lanjutan dan indikator teknikal kompleks.',
+    level: 'Menengah',
+    duration: '10 minggu',
+    price: 'Rp 3.499.000',
+    image: '/images/course-2.jpg',
   },
   {
     id: 3,
-    title: 'Cryptocurrency Trading',
-    description: 'Understand cryptocurrency markets and trading strategies.',
-    image: '/images/crypto-trading.jpg',
-    price: '$249',
-    duration: '10 weeks',
-    level: 'Intermediate',
+    title: 'Trading Psychology Masterclass',
+    description: 'Kuasai aspek psikologi trading dan manajemen emosi.',
+    level: 'Lanjutan',
+    duration: '6 minggu',
+    price: 'Rp 2.999.000',
+    image: '/images/course-3.jpg',
   },
   {
     id: 4,
-    title: 'Technical Analysis Mastery',
-    description: 'Deep dive into technical analysis patterns and indicators.',
-    image: '/images/technical-analysis.jpg',
-    price: '$199',
-    duration: '6 weeks',
-    level: 'Intermediate',
+    title: 'Strategi Swing Trading',
+    description: 'Pelajari teknik swing trading untuk hasil optimal.',
+    level: 'Menengah',
+    duration: '8 minggu',
+    price: 'Rp 2.799.000',
+    image: '/images/course-4.jpg',
   },
-  {
-    id: 5,
-    title: 'Risk Management in Trading',
-    description: 'Learn essential risk management strategies to protect your capital.',
-    image: '/images/risk-management.jpg',
-    price: '$149',
-    duration: '4 weeks',
-    level: 'All Levels',
-  },
-  {
-    id: 6,
-    title: 'Day Trading Strategies',
-    description: 'Master day trading techniques and strategies for consistent profits.',
-    image: '/images/day-trading.jpg',
-    price: '$299',
-    duration: '8 weeks',
-    level: 'Advanced',
-  },
-];
+]
 
-export default function Courses() {
+export default function CoursesPage() {
   return (
-    <div>
-      <Navbar />
-      <div className="bg-gray-50 min-h-screen py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
-              Our Trading Courses
-            </h1>
-            <p className="mt-4 text-xl text-gray-500">
-              Comprehensive courses designed to make you a successful trader
-            </p>
-          </div>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Kursus Trading</h1>
+          <p className="text-lg text-gray-600">
+            Pilih kursus yang sesuai dengan level dan tujuan trading Anda
+          </p>
+        </div>
 
-          {/* Filters */}
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-              All Courses
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 rounded-md hover:bg-gray-100">
-              Beginner
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 rounded-md hover:bg-gray-100">
-              Intermediate
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 rounded-md hover:bg-gray-100">
-              Advanced
-            </button>
-          </div>
-
-          {/* Course Grid */}
-          <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <div key={course.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="relative h-48">
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    className="object-cover"
-                  />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {courses.map((course) => (
+            <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="relative h-48">
+                <Image
+                  src={course.image}
+                  alt={course.title}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+              <div className="p-6">
+                <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
+                <p className="text-gray-600 mb-4">{course.description}</p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-gray-500">Level: {course.level}</span>
+                  <span className="text-sm text-gray-500">Durasi: {course.duration}</span>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900">{course.title}</h3>
-                  <p className="mt-2 text-gray-500">{course.description}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      <span className="text-blue-600 font-bold text-2xl">{course.price}</span>
-                      <span className="ml-2 text-gray-500">/ {course.duration}</span>
-                    </div>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                      {course.level}
-                    </span>
-                  </div>
-                  <div className="mt-6">
-                    <Link
-                      href={`/courses/${course.id}`}
-                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
-                    >
-                      Enroll Now
-                    </Link>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-blue-600">{course.price}</span>
+                  <Link
+                    href={`/courses/${course.id}`}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                  >
+                    Daftar Sekarang
+                  </Link>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  );
+  )
 } 

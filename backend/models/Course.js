@@ -4,100 +4,75 @@ const courseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true
   },
   description: {
     type: String,
-    required: true
-  },
-  instructor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    required: true,
   },
   price: {
     type: Number,
     required: true,
-    min: 0
-  },
-  duration: {
-    type: String,
-    required: true
   },
   level: {
     type: String,
-    enum: ['Beginner', 'Intermediate', 'Advanced', 'All Levels'],
-    required: true
+    enum: ['Pemula', 'Menengah', 'Lanjutan'],
+    required: true,
   },
-  topics: [{
+  duration: {
     type: String,
-    required: true
-  }],
-  requirements: [{
-    type: String
-  }],
+    required: true,
+  },
   image: {
     type: String,
-    required: true
+    required: true,
   },
-  lessons: [{
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    },
-    content: {
-      type: String,
-      required: true
-    },
-    duration: {
-      type: Number, // in minutes
-      required: true
-    },
-    order: {
-      type: Number,
-      required: true
-    }
+  instructor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  modules: [{
+    title: String,
+    description: String,
+    videoUrl: String,
+    duration: String,
+    order: Number,
   }],
   enrolledStudents: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   }],
   ratings: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
     rating: {
       type: Number,
-      required: true,
       min: 1,
-      max: 5
+      max: 5,
     },
     review: String,
     createdAt: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   }],
   averageRating: {
     type: Number,
-    default: 0
+    default: 0,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-// Update timestamps on save
+// Update timestamps before saving
 courseSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
@@ -106,10 +81,12 @@ courseSchema.pre('save', function(next) {
 // Calculate average rating before saving
 courseSchema.pre('save', function(next) {
   if (this.ratings.length > 0) {
-    const totalRating = this.ratings.reduce((sum, rating) => sum + rating.rating, 0);
-    this.averageRating = totalRating / this.ratings.length;
+    const sum = this.ratings.reduce((acc, curr) => acc + curr.rating, 0);
+    this.averageRating = sum / this.ratings.length;
   }
   next();
 });
 
-module.exports = mongoose.model('Course', courseSchema); 
+const Course = mongoose.model('Course', courseSchema);
+
+module.exports = Course; 

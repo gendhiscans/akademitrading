@@ -1,23 +1,23 @@
-# Akademi Trading
+# Trading Academy Website
 
-A modern full-stack trading academy platform built with Next.js and Express.js.
+A modern full-stack website for a trading academy built with Next.js, Express.js, and MongoDB.
 
 ## Features
 
-- 🎓 Comprehensive trading courses
-- 👥 User authentication and profiles
-- 📱 Responsive design
-- 🛒 Course enrollment system
-- 💻 Modern UI with Tailwind CSS
+- Responsive modern UI with Tailwind CSS
+- User authentication system
+- Course management
+- Contact form
+- Admin dashboard
+- Interactive learning materials
 
 ## Tech Stack
 
 - **Frontend:**
   - Next.js 14
-  - React 18
-  - Tailwind CSS
   - TypeScript
-  - Axios
+  - Tailwind CSS
+  - React
 
 - **Backend:**
   - Express.js
@@ -26,18 +26,10 @@ A modern full-stack trading academy platform built with Next.js and Express.js.
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-- MongoDB (for backend)
-
-### Installation
-
 1. Clone the repository:
 ```bash
-git clone https://github.com/[your-username]/akademi-trading.git
-cd akademi-trading
+git clone [your-repo-url]
+cd akademi_trading
 ```
 
 2. Install dependencies:
@@ -45,49 +37,42 @@ cd akademi-trading
 npm install
 ```
 
-3. Create a `.env.local` file in the root directory:
-```
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
-
-4. Start the development server:
-```bash
-npm run dev
-```
-
-### Backend Setup
-
-1. Navigate to the backend directory:
-```bash
-cd backend
-```
-
-2. Install backend dependencies:
-```bash
-npm install
-```
-
-3. Create a `.env` file in the backend directory:
-```
-PORT=5000
-MONGODB_URI=your_mongodb_connection_string
+3. Set up environment variables:
+Create a `.env` file in the root directory and add:
+```env
+MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 ```
 
-4. Start the backend server:
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-## Deployment
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- Frontend is configured for Netlify deployment
-- Backend can be deployed to any Node.js hosting service
+## Project Structure
+
+```
+akademi_trading/
+├── src/
+│   ├── app/              # Next.js pages
+│   ├── components/       # React components
+│   └── styles/          # Global styles
+├── public/              # Static files
+│   └── images/          # Website images
+├── backend/             # Express.js backend
+└── package.json
+```
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 

@@ -1,27 +1,26 @@
 const express = require('express');
-const router = express.Router();
 const Course = require('../models/Course');
 const auth = require('../middleware/auth');
+const router = express.Router();
 
 // Get all courses
 router.get('/', async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate('instructor', 'firstName lastName')
-      .select('-lessons.content');
+      .populate('instructor', 'name')
+      .select('-modules');
     res.json(courses);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error fetching courses' });
   }
 });
 
-// Get course by ID
+// Get single course by ID
 router.get('/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id)
-      .populate('instructor', 'firstName lastName')
-      .populate('ratings.user', 'firstName lastName');
+      .populate('instructor', 'name')
+      .populate('ratings.user', 'name');
     
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
@@ -29,93 +28,68 @@ router.get('/:id', async (req, res) => {
     
     res.json(course);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error fetching course' });
   }
 });
 
-// Create new course (instructor only)
+// Create new course (admin only)
 router.post('/', auth, async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      price,
-      duration,
-      level,
-      topics,
-      requirements,
-      image,
-      lessons
-    } = req.body;
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
 
     const course = new Course({
-      title,
-      description,
+      ...req.body,
       instructor: req.user.id,
-      price,
-      duration,
-      level,
-      topics,
-      requirements,
-      image,
-      lessons
     });
 
     await course.save();
     res.status(201).json(course);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error creating course' });
   }
 });
 
-// Update course (instructor only)
+// Update course (admin only)
 router.put('/:id', auth, async (req, res) => {
   try {
-    let course = await Course.findById(req.params.id);
-    
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized' });
     }
 
-    // Check if user is the instructor
-    if (course.instructor.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-
-    course = await Course.findByIdAndUpdate(
+    const course = await Course.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { ...req.body },
       { new: true }
     );
 
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
     res.json(course);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error updating course' });
   }
 });
 
-// Delete course (instructor only)
+// Delete course (admin only)
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    const course = await Course.findByIdAndDelete(req.params.id);
     
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    // Check if user is the instructor
-    if (course.instructor.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-
-    await course.remove();
-    res.json({ message: 'Course removed' });
+    res.json({ message: 'Course deleted successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error deleting course' });
   }
 });
 
@@ -128,7 +102,7 @@ router.post('/:id/enroll', auth, async (req, res) => {
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    // Check if already enrolled
+    // Check if user is already enrolled
     if (course.enrolledStudents.includes(req.user.id)) {
       return res.status(400).json({ message: 'Already enrolled in this course' });
     }
@@ -138,8 +112,7 @@ router.post('/:id/enroll', auth, async (req, res) => {
 
     res.json({ message: 'Successfully enrolled in course' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error enrolling in course' });
   }
 });
 
@@ -153,28 +126,26 @@ router.post('/:id/rate', auth, async (req, res) => {
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    // Check if user is enrolled
-    if (!course.enrolledStudents.includes(req.user.id)) {
-      return res.status(401).json({ message: 'Must be enrolled to rate course' });
-    }
-
     // Check if user has already rated
-    const existingRating = course.ratings.find(r => r.user.toString() === req.user.id);
-    if (existingRating) {
-      return res.status(400).json({ message: 'Already rated this course' });
-    }
+    const existingRating = course.ratings.find(
+      r => r.user.toString() === req.user.id
+    );
 
-    course.ratings.push({
-      user: req.user.id,
-      rating,
-      review
-    });
+    if (existingRating) {
+      existingRating.rating = rating;
+      existingRating.review = review;
+    } else {
+      course.ratings.push({
+        user: req.user.id,
+        rating,
+        review,
+      });
+    }
 
     await course.save();
-    res.json(course);
+    res.json({ message: 'Rating added successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error adding rating' });
   }
 });
 

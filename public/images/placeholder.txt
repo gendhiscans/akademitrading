@@ -1,6 +1,0 @@
-This directory contains course images:
-- forex-trading.jpg
-- stock-trading.jpg
-- crypto-trading.jpg
-
-Please add appropriate images here. 
